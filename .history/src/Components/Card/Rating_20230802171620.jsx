@@ -1,0 +1,30 @@
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+
+// eslint-disable-next-line react/prop-types
+const Rating = ({ rate }) => {
+  return (
+    <div>
+      {[...Array(5)].map((_, index) => {
+        if (index < rate)
+          return (
+            <FaStar className="text-xl text-yellow-400 inline-block"></FaStar>
+          );
+        else if (index - rate < 1 && index - rate > 0)
+          return (
+              <FaStarHalfAlt className="text-xl text-yellow-400 inline-block"></FaStarHalfAlt>
+            <div className="">
+              <FaStarHalfAlt className="text-xl text-yellow-400 inline-block"></FaStarHalfAlt>
+            </div>
+          );
+        else
+          return (
+            <span key={index} className="text-gray-400 text-2xl">
+              &#9733;
+            </span>
+          );
+      })}
+    </div>
+  );
+};
+
+export default Rating;
