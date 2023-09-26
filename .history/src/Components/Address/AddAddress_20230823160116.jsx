@@ -1,0 +1,25 @@
+import AddressInput from "./AddressInput";
+
+const AddAddress = () => {
+  return (
+    <div>
+      <h1>New Address</h1>
+      <div className="flex items-center">
+        <input
+          type="text"
+          placeholder="Fullname"
+          className="px-3 py-1 border rounded-md border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+        ></input>
+        <input
+          type="text"
+          placeholder="Phone number"
+          className="px-3 py-1 border rounded-md border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+        ></input>
+      </div>
+      <AddressInput></AddressInput>
+      <input type="text" placeholder="Address"></input>
+    </div>
+  );
+};
+
+export default AddAddress;

@@ -1,0 +1,36 @@
+import axios from "axios";
+import { useEffect, useRef } from "react";
+import { FaCheck } from "react-icons/fa6";
+
+const Success = () => {
+  const order = JSON.parse(localStorage.getItem("Order"));
+  const SaveOrder = async () => {
+    if (!order) return;
+    try {
+      const res = await axios.post(
+        "http://localhost:20474/api/order/save",
+        order
+      );
+      if (res.data.data) {
+        localStorage.removeItem("BuyList");
+        localStorage.removeItem("Order");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const SaveOrderRef = useRef();
+  SaveOrderRef.current = SaveOrder;
+  useEffect(() => {
+    SaveOrderRef.current();
+  }, []);
+
+  return (
+    <div className="text-center my-32">
+      <FaCheck className="inline-block text-9xl text-green-500"></FaCheck>
+      <h1 className="text-3xl font-semibold mt-5">Placed order successfully</h1>
+    </div>
+  );
+};
+
+export default Success;
