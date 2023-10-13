@@ -84,8 +84,6 @@ function App() {
               path="/product/:id"
               element={<InforCard></InforCard>}
             ></Route>
-            {/* <Route path="/:nameStore" element={<Store></Store>}></Route> */}
-
             <Route path="/user">
               <Route path="information" element={<Information></Information>}>
                 <Route path="order" element={<Order></Order>}></Route>
