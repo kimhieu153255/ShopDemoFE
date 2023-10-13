@@ -1,15 +1,16 @@
 import Cookies from "js-cookie";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../Components/Contexts/AuthContext";
+// import { AuthContext } from "../Components/Contexts/AuthContext";
 
 const RegisterStore = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const userRef = useRef(JSON.parse(Cookies.get("user")?.toString() || "{}"));
-  const { token, setUser } = useContext(AuthContext);
+  const user = JSON.parse(Cookies.get("user")?.toString() || "{}");
+  // const { token, setUser } = useContext(AuthContext);
+  const token = Cookies.get("token");
 
   useEffect(() => {
     if (!token) navigate("/");
@@ -20,7 +21,7 @@ const RegisterStore = () => {
     const data = {
       name: e.target.name.value,
       address: e.target.address.value,
-      userId: userRef.current?._id,
+      userId: user?._id,
     };
     try {
       const res = await axios.post(
@@ -45,7 +46,10 @@ const RegisterStore = () => {
         //     expires: 1 / 24,
         //   });
         // }
-        setUser((prev) => ({ ...prev, role: 1 }));
+        // setUser((prev) => ({ ...prev, role: 1 }));
+        Cookies.set("user", JSON.stringify({ ...res.data, role: 1 }), {
+          expires: 1 / 24,
+        });
         navigate("/");
       }
     } catch (err) {
@@ -76,7 +80,7 @@ const RegisterStore = () => {
                   name="boss"
                   id="boss"
                   className="border-2 border-gray-400 rounded-md p-2 focus:border-green-500 focus:outline-none focus:ring-green-300 transition-all"
-                  value={userRef.current?.username || "User"}
+                  value={user?.username || "User"}
                   readOnly
                 />
               </div>
@@ -89,7 +93,7 @@ const RegisterStore = () => {
                   name="phone"
                   id="phone"
                   className="border-2 border-gray-400 rounded-md p-2 focus:border-green-500 focus:outline-none focus:ring-green-300 transition-all"
-                  value={userRef.current?.phone || "0000000000"}
+                  value={user?.phone || "0000000000"}
                   readOnly
                 />
               </div>

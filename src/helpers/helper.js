@@ -10,7 +10,8 @@ const validatePassword = (input) => {
 
 const validatePhone = (input) => {
   // input = 0961447969
-  const phoneRegex = /^[+]{1}(?:[0-9-()/.]s?){6, 15}[0-9]{1}$/;
+  const phoneRegex =
+    /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
   return phoneRegex.test(input);
 };
 

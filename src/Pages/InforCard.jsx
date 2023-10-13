@@ -167,6 +167,18 @@ const InforCard = () => {
     }
   }, [colorChosen, product?.inforProducts, sizeChosen]);
 
+  const renderPrice = (arr, color, size) => {
+    const inforProduct = arr.find(
+      (item) => item.color === color && item.size === size
+    );
+    return inforProduct
+      ? inforProduct.price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        })
+      : 0;
+  };
+
   return (
     <div className="mx-auto 2xl:mx-40 ">
       {/* link */}
@@ -237,10 +249,7 @@ const InforCard = () => {
             </span>
           </div>
           <div className="font-semibold text-amber-600 text-3xl p-5 bg-gray-200 my-5 rounded-md">
-            {product?.product?.price.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            })}
+            {renderPrice(product?.inforProducts || [], colorChosen, sizeChosen)}
           </div>
           <div className="my-14">
             {colorArr?.length > 0 && (

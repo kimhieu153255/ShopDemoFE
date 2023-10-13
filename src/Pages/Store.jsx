@@ -12,7 +12,8 @@ import CardList from "../Components/Card/CardList";
 import ButtonPage from "../Components/Button/ButtonPage";
 import MainSortBar from "../Components/Layouts/MainSortBar";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import storeAxiosInstance from "../Axios/Store.a";
 
 const Store = () => {
   const user = JSON.parse(Cookies.get("user")?.toString() || null);
@@ -21,9 +22,29 @@ const Store = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
+  const [store, setStore] = useState({});
+
+  const getStore = async () => {
+    try {
+      const res = await storeAxiosInstance.get(
+        `/getStoreByStoreId?storeId=${storeId}`
+      );
+      if (res.data) {
+        console.log(res.data.data);
+        setStore(() => res.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const GetStoreByStoreIdRef = useRef();
+  GetStoreByStoreIdRef.current = getStore;
+
   useEffect(() => {
     setPage(1);
-  }, [url]);
+    GetStoreByStoreIdRef.current(storeId);
+  }, [url, storeId]);
 
   return (
     <div className="min-w-max w-4/5 mx-auto justify-center">
@@ -43,7 +64,7 @@ const Store = () => {
                 className="w-20 h-20 object-cover rounded-full ring-gray-300 ring-4 ring-opacity-50"
               />
               <div className="inline-block mt-4">
-                <span className="text-xl ">GUGOSTART</span>
+                <span className="text-xl ">{store?.name}</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2 mt-1 min-w-max">
