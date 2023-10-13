@@ -10,7 +10,7 @@ import Resume from "./Components/Information/Resume";
 import Address from "./Components/Information/Address";
 import ChangePass from "./Components/Information/ChangePass";
 import SettingInfo from "./Components/Information/SettingInfo";
-import ChangeEmail from "./Components/Information/changeEmail";
+import ChangeEmail from "./Components/Information/ChangeEmail";
 import VerifyEmail from "./Components/Information/verifyEmail";
 import RegisterStore from "./Pages/RegisterStore";
 import Store from "./Pages/Store";
