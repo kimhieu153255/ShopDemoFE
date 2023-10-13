@@ -83,7 +83,7 @@ const MainSortBar = ({ setUrl, url, page, setPage, totalPage }) => {
         >
           <div
             className={
-              "flex justify-between items-center gap-2 hover:bg-green-500 hover:text-white border bg-gray-100 rounded-md px-2 py-1 cursor-pointer w-44 " +
+              "flex justify-between items-center gap-2 hover:bg-green-500 hover:text-white border bg-gray-100 rounded-md px-2 py-1 cursor-pointer lg:w-44 w-30 " +
               (state === "Low to high" || state === "High to low"
                 ? "bg-green-500 text-white"
                 : "")

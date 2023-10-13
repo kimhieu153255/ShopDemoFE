@@ -48,7 +48,6 @@ function App() {
             element={
               <CartProvider>
                 <Nav></Nav>
-                <Footer></Footer>
                 <Message></Message>
               </CartProvider>
             }

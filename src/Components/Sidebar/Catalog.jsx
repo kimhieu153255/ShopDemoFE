@@ -78,6 +78,7 @@ const Catalog = ({ setUrl, url }) => {
               </div>
             );
         })}
+        {data?.length <= 0 && <div className="text-gray-500">Empty</div>}
       </div>
       <div className="flex justify-center gap-1 mt-2 ">
         {count < total && (

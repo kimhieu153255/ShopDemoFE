@@ -13,7 +13,7 @@ import ButtonPage from "../Components/Button/ButtonPage";
 import MainSortBar from "../Components/Layouts/MainSortBar";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
-import storeAxiosInstance from "../Axios/Store.a";
+import tokenAxiosInstance from "../Axios/Token.a";
 
 const Store = () => {
   const user = JSON.parse(Cookies.get("user")?.toString() || null);
@@ -26,8 +26,8 @@ const Store = () => {
 
   const getStore = async () => {
     try {
-      const res = await storeAxiosInstance.get(
-        `/getStoreByStoreId?storeId=${storeId}`
+      const res = await tokenAxiosInstance.get(
+        `/store/api/getStoreByStoreId?storeId=${storeId}`
       );
       if (res.data) {
         console.log(res.data.data);

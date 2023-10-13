@@ -81,6 +81,9 @@ const SidebarFilter = ({ setUrl, url, setpage }) => {
               </div>
             );
         })}
+        {CategoryArr.length <= 0 && (
+          <div className="text-center text-sm text-gray-500">Empty</div>
+        )}
       </div>
       {/* extend collapse */}
       <div className="flex justify-center gap-1 mt-2 ">

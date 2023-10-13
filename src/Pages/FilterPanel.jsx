@@ -11,7 +11,7 @@ const FilterPanel = () => {
   const [totalPage, setTotalPage] = useState(1);
 
   return (
-    <div className="my-5 flex gap-3 mx-auto w-4/5 justify-center">
+    <div className="my-5 flex gap-3 mx-auto justify-center min-w-max">
       <SidebarFilter
         setUrl={setUrl}
         url={url}

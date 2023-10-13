@@ -53,7 +53,7 @@ const ChangePhone = () => {
                 setErrorNewPhone("Phone number is required");
                 return;
               }
-              if (validatePhone(e.target.value))
+              if (!validatePhone(e.target.value))
                 setErrorNewPhone("Invalid phone number");
               else setErrorNewPhone("");
             }}

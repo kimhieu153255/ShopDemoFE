@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../redux-toolkit/CartSlice";
+import Footer from "./Footer";
 
 const NavList = [
   {
@@ -114,7 +115,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <>
+    <div className="min-w-max">
       <div className="shadow-md mb-2 px-[10%] bg-gray-100 min-w-max">
         {/* nav top */}
         <div className="p-1 pt-2 flex items-center justify-center gap-x-12 sm:gap-x-16 w-auto text-lg font-semibold min-w-max">
@@ -229,7 +230,8 @@ const Nav = () => {
         </div>
       </div>
       <Outlet></Outlet>
-    </>
+      <Footer></Footer>
+    </div>
   );
 };
 

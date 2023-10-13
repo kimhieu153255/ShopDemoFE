@@ -95,9 +95,9 @@ const ArrFollow = [
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className="bg-gray-100 mt-5 w-full">
+    <div className="bg-gray-100 mt-5 min-w-fit">
       <div className="pt-10 pb-5 flex justify-evenly border-b-gray-500 border-2">
-        <div className="flex flex-col text-lg w-40 min-w-max ">
+        <div className="flex flex-col text-lg w-40 min-w-max">
           <h2 className="font-semibold text-xl">Shop</h2>
           <hr className="inline-block bg-green-500 h-1 w-10 mb-5 rounded-2xl" />
           {ArrShop.map((item, index) => (
