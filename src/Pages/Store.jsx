@@ -27,7 +27,7 @@ const Store = () => {
   const getStore = async () => {
     try {
       const res = await tokenAxiosInstance.get(
-        `/store/api/getStoreByStoreId?storeId=${storeId}`
+        `/store/api/get?userId=${user?._id}`
       );
       if (res.data) {
         console.log(res.data.data);

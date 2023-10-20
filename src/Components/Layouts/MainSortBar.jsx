@@ -83,7 +83,7 @@ const MainSortBar = ({ setUrl, url, page, setPage, totalPage }) => {
         >
           <div
             className={
-              "flex justify-between items-center gap-2 hover:bg-green-500 hover:text-white border bg-gray-100 rounded-md px-2 py-1 cursor-pointer lg:w-44 w-30 " +
+              "flex justify-between items-center gap-2 hover:bg-green-500 hover:text-white border bg-gray-100 rounded-md px-2 py-1 cursor-pointer lg:w-44 w-30  " +
               (state === "Low to high" || state === "High to low"
                 ? "bg-green-500 text-white"
                 : "")
@@ -103,11 +103,11 @@ const MainSortBar = ({ setUrl, url, page, setPage, totalPage }) => {
           </div>
           {isDropdown && (
             <div
-              className="absolute px-4 py-2 border rounded-md bg-gray-100 flex flex-col"
+              className="absolute px-4 py-2 border rounded-md bg-gray-100 flex flex-col lg:w-44 w-30 "
               ref={DropRef}
             >
               <span
-                className="hover:text-green-500 cursor-pointer"
+                className="hover:text-green-500 cursor-pointer min-w-max"
                 onClick={() => {
                   setState("Low to high");
                   handleSort("Low-to-high");

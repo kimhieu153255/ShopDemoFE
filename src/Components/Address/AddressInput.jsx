@@ -11,16 +11,16 @@ const AddressInput = ({ setProChoice, setDisChoice, setWardChoice }) => {
 
   const funcGetProvince = async () => {
     try {
-      const res = await axios.get(
-        `https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`
-      );
+      const res = await axios.get(`https://provinces.open-api.vn/api/p/`);
       if (res.data) {
-        const arr = await res.data?.data?.data.map((item) => {
+        console.log(res.data);
+        const arr = await res.data?.map((item) => {
           return {
             name: item.name,
             code: item.code,
           };
         });
+        console.log(arr);
         setProvinces(arr || []);
       } else setProvinces([]);
     } catch (err) {
@@ -35,16 +35,17 @@ const AddressInput = ({ setProChoice, setDisChoice, setWardChoice }) => {
   const funcGetDistrict = async (code) => {
     try {
       const res = await axios.get(
-        `https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${code}&limit=-1`
+        `https://provinces.open-api.vn/api/p/${code}?depth=2`
       );
       if (res.data) {
         console.log(res.data);
-        const arr = await res.data?.data?.data?.map((item) => {
+        const arr = await res.data?.districts.map((item) => {
           return {
             name: item.name,
             code: item.code,
           };
         });
+        console.log(arr);
         setDistricts(arr || []);
       } else setDistricts([]);
     } catch (err) {
@@ -59,15 +60,17 @@ const AddressInput = ({ setProChoice, setDisChoice, setWardChoice }) => {
   const funcGetWard = async (code) => {
     try {
       const res = await axios.get(
-        `https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${code}&limit=-1`
+        `https://provinces.open-api.vn/api/d/${code}?depth=2`
       );
       if (res.data) {
-        const arr = await res.data?.data?.data.map((item) => {
+        console.log(res.data);
+        const arr = await res.data?.wards.map((item) => {
           return {
             name: item.name,
             code: item.code,
           };
         });
+        console.log(arr);
         setWards(arr || []);
       } else setWards([]);
     } catch (err) {
@@ -101,10 +104,14 @@ const AddressInput = ({ setProChoice, setDisChoice, setWardChoice }) => {
   }, [code.codeDis]);
 
   const handleProvince = async (e) => {
+    console.log(e.target);
     const selectedProvinceCode = e.target.value;
+    console.log(selectedProvinceCode);
+    console.log(provinces);
     const selectedProvince = provinces.find(
-      (item) => item.code === selectedProvinceCode
+      (item) => item.code == selectedProvinceCode
     );
+    console.log(selectedProvince);
     setCode({
       codePro: selectedProvinceCode,
     });
@@ -114,26 +121,29 @@ const AddressInput = ({ setProChoice, setDisChoice, setWardChoice }) => {
   };
 
   const handleDistrict = (e) => {
+    console.log(e.target);
     const selectedDistrictCode = e.target.value;
+    console.log(selectedDistrictCode);
     const selectedDistrict = districts.find(
-      (item) => item.code === selectedDistrictCode
+      (item) => item.code == selectedDistrictCode
     );
+    console.log(selectedDistrict);
     setCode((prev) => ({
       ...prev,
       codeDis: selectedDistrictCode,
     }));
-    setDisChoice(selectedDistrict.name || "");
+    setDisChoice(selectedDistrict?.name || "");
     setWardChoice("");
   };
 
   const handleWard = (e) => {
     const selectedWardCode = e.target.value;
-    const selectedWard = wards.find((item) => item.code === selectedWardCode);
+    const selectedWard = wards.find((item) => item.code == selectedWardCode);
     setCode((prev) => ({
       ...prev,
       codeWard: selectedWardCode,
     }));
-    setWardChoice(selectedWard.name || "");
+    setWardChoice(selectedWard?.name || "");
   };
 
   return (

@@ -4,7 +4,7 @@ import BannerItem from "./BannerItem";
 
 const Banner = () => {
   return (
-    <div className="banners h-[350px] bg-gray-700 max-w-[1000px] mx-auto rounded-lg  overflow-hidden ">
+    <div className="banners h-[350px] bg-gray-700 max-w-[1000px] lg:w-[1000px] md:w-[700px] mx-auto rounded-lg overflow-hidden">
       <Carousel
         autoPlay
         infiniteLoop
@@ -12,15 +12,9 @@ const Banner = () => {
         showStatus={false}
         emulateTouch={true}
       >
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
-        <BannerItem />
+        {new Array(7).fill(0).map((item, index) => (
+          <BannerItem key={index}></BannerItem>
+        ))}
       </Carousel>
     </div>
   );

@@ -4,7 +4,8 @@ import { FaTimes } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
 import Cookies from "js-cookie";
-import axios from "axios";
+// import axios from "axios";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const AddAddress = ({ isHidden, setIsHidden }) => {
   const [proChoice, setProChoice] = useState("");
@@ -37,11 +38,15 @@ const AddAddress = ({ isHidden, setIsHidden }) => {
     };
 
     const user = JSON.parse(Cookies.get("user")?.toString() || null);
-    const token = Cookies.get("token")?.toString() || null;
+    // const token = Cookies.get("token")?.toString() || null;
 
     try {
-      const res = await axios.post(
-        `http://localhost:20474/address/api/add?userId=${user._id}&token=${token}`,
+      // const res = await axios.post(
+      //   `http://localhost:20474/address/api/add?userId=${user._id}&token=${token}`,
+      //   data
+      // );
+      const res = await tokenAxiosInstance.post(
+        `/address/api/add?userId=${user._id}`,
         data
       );
       if (res.data) {

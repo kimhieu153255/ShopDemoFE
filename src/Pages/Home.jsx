@@ -42,7 +42,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="Home md:w-[1000px] w-[750px]  mx-auto bg-white py-2">
+    <div className="Home max-w-[1000px] w-[750px] lg:w-[1000px] md:w-[700px]  mx-auto bg-white py-2">
       <Banner></Banner>
       <div className="mt-5 p-2 border bg-gray-100 rounded-lg">
         <div className="flex justify-between items-center mt-3">

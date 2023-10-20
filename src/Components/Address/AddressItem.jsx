@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import propTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { addMessage, removeMessage } from "../../redux-toolkit/MessageSlice";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const AddressItem = ({
   addressId,
@@ -38,9 +39,13 @@ const AddressItem = ({
 
   const funcSetDefaultAddress = async () => {
     try {
-      const res = await axios.put(
-        `http://localhost:20474/address/api/set-default?addressId=${addressId}&token=${token}`
+      // const res = await axios.put(
+      //   `http://localhost:20474/address/api/set-default?addressId=${addressId}&token=${token}`
+      // );
+      const res = await tokenAxiosInstance.put(
+        `/address/api/set-default?addressId=${addressId}`
       );
+
       if (res.data) {
         dispatch(addMessage(res.data.message));
         setTimeout(() => {

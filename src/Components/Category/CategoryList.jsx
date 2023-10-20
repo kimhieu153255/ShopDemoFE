@@ -44,13 +44,13 @@ const CategoryList = () => {
       <Swiper
         grabCursor={true}
         breakpoints={{
-          380: {
+          400: {
             slidesPerView: 3,
           },
-          750: {
+          720: {
             slidesPerView: 4,
           },
-          900: {
+          1100: {
             slidesPerView: 5,
           },
         }}

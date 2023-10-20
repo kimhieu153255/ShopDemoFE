@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import Nav from "./Components/Layouts/Nav";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
@@ -20,7 +20,6 @@ import { AuthProvider } from "./Components/Contexts/AuthContext";
 import AddCard from "./Pages/AddCard";
 import { Fragment } from "react";
 import { ShopProvider } from "./Components/Contexts/ShopContext";
-import Footer from "./Components/Layouts/Footer";
 import PrivacyPolicy from "./Components/Shop/PrivacyPolicy";
 import FAQ from "./Components/Support/FAQ";
 import Contact from "./Components/Support/Contact";
@@ -37,6 +36,7 @@ import Pay from "./Pages/Pay";
 import Success from "./Pages/Success";
 import Failure from "./Pages/Failure";
 import Order from "./Pages/Order";
+import Footer from "./Components/Layouts/Footer";
 
 function App() {
   return (
@@ -47,8 +47,12 @@ function App() {
             path="/"
             element={
               <CartProvider>
-                <Nav></Nav>
-                <Message></Message>
+                <div className="min-w-max">
+                  <Nav></Nav>
+                  <Outlet></Outlet>
+                  <Footer></Footer>
+                  <Message></Message>
+                </div>
               </CartProvider>
             }
           >

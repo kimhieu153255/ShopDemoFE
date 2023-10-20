@@ -14,7 +14,7 @@ const CartListSmall = () => {
   return (
     <div>
       {cartItems?.length === 0 && (
-        <div className="text-black flex flex-col font-semibold text-base min-w-max gap-2 bg-gray-100 px-3 py-2 border rounded-md">
+        <div className="text-black flex flex-col font-semibold text-base min-w-max gap-2 bg-gray-100 px-3 py-2 border rounded-md ">
           <div className="w-40 h-28">
             <FaCartPlus className="text-8xl block m-auto h-full text-green-400"></FaCartPlus>
           </div>

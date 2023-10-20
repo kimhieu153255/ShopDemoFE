@@ -96,6 +96,7 @@ const InforCard = () => {
       );
       if (res.data) {
         console.log(res.data.data);
+        setAvailable(available - quantity);
         dispatch(addMessage(`Add ${name} successfully`));
         setTimeout(() => {
           dispatch(removeMessage());
@@ -364,7 +365,30 @@ const InforCard = () => {
                 Add to cart
               </div>
             </button>
-            <button className="bg-green-500 border border-green-600 text-white font-semibold py-2 px-5 rounded-md hover:bg-green-600 text-xl">
+            <button
+              className="bg-green-500 border border-green-600 text-white font-semibold py-2 px-5 rounded-md hover:bg-green-600 text-xl"
+              onClick={() => {
+                const temp = product?.inforProducts.find((item) => {
+                  if (item.color === colorChosen && item.size === sizeChosen) {
+                    return item.imgSrc;
+                  }
+                });
+                const buylist = [
+                  {
+                    id: product?.product?._id,
+                    color: colorChosen,
+                    size: sizeChosen,
+                    quantity: quantity,
+                    price: temp?.price,
+                    name: product?.product?.name,
+                    imgSrc: temp?.imgSrc,
+                  },
+                ];
+                console.log(buylist);
+                localStorage.setItem("BuyList", JSON.stringify(buylist));
+                window.location.href = "/pay";
+              }}
+            >
               Buy now
             </button>
           </div>

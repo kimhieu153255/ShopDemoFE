@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addMessage, removeMessage } from "../redux-toolkit/MessageSlice";
 import AddAddress from "../Components/Address/AddAddress";
+import disMessge from "../helpers/disMessage";
 
 const Pay = () => {
   const tempBuyList = JSON.parse(localStorage.getItem("BuyList") || "[]");
@@ -14,7 +15,7 @@ const Pay = () => {
   const user = JSON.parse(Cookies.get("user")?.toString() || "{}");
   const [addresses, setAddresses] = useState([]);
   const [choosenAddressTemp, setchoosenAddressTemp] = useState({});
-  const [choosenAddress, setchoosenAddress] = useState({});
+  const [choosenAddress, setchoosenAddress] = useState();
   const [isHidden, setIsHidden] = useState(true);
   const [isAddAddress, setIsAddAddress] = useState(true);
   const [method, setMethod] = useState("payment on delivery");
@@ -35,6 +36,7 @@ const Pay = () => {
       console.log(res.data);
       setAddresses(res.data.data);
       setchoosenAddress(res.data.data.filter((item) => item.isDefault)[0]);
+      if (!choosenAddress) setchoosenAddress(res.data.data[0]);
       setchoosenAddressTemp(res.data.data.filter((item) => item.isDefault)[0]);
     }
   };
@@ -42,6 +44,15 @@ const Pay = () => {
   getAddressesRef.current = funcGetAddresses;
 
   const handleOrder = async () => {
+    if (!choosenAddress) {
+      disMessge(
+        dispatch,
+        addMessage,
+        removeMessage,
+        "Please choose address to delivery!"
+      );
+      return;
+    }
     const data = {
       userId: user._id,
       productOrderArr: BuyList.map((item) => {
@@ -58,7 +69,6 @@ const Pay = () => {
       totalPrice: totalCost + costDelivery,
       addressUserId: choosenAddress._id,
     };
-
     localStorage.setItem("Order", JSON.stringify(data));
 
     try {
@@ -109,28 +119,30 @@ const Pay = () => {
             <FaLocationDot></FaLocationDot>
             Delivery Address
           </div>
-          <div className="text-lg mt-2 flex justify-between">
-            <div>
-              <span className="font-semibold">
-                {choosenAddress.name} {choosenAddress.phone}
-              </span>
-              <span className="pl-2 ">
-                {choosenAddress.specific}, {choosenAddress.ward},{" "}
-                {choosenAddress.province}
-              </span>
-              {choosenAddress.isDefault && (
-                <span className="ml-2 px-2 py-1 border-green-500 text-green-500 rounded-md border text-sm">
-                  Default
+          {choosenAddress && (
+            <div className="text-lg mt-2 flex justify-between">
+              <div>
+                <span className="font-semibold">
+                  {choosenAddress.name} {choosenAddress.phone}
                 </span>
-              )}
+                <span className="pl-2 ">
+                  {choosenAddress.specific}, {choosenAddress.ward},{" "}
+                  {choosenAddress.province}
+                </span>
+                {choosenAddress.isDefault && (
+                  <span className="ml-2 px-2 py-1 border-green-500 text-green-500 rounded-md border text-sm">
+                    Default
+                  </span>
+                )}
+              </div>
+              <button
+                className="ml-2 px-3 py-2 border-green-500 bg-green-500 font-semibold text-white rounded-md border text-sm hover:bg-green-600"
+                onClick={() => setIsHidden(false)}
+              >
+                Change
+              </button>
             </div>
-            <button
-              className="ml-2 px-3 py-2 border-green-500 bg-green-500 font-semibold text-white rounded-md border text-sm hover:bg-green-600"
-              onClick={() => setIsHidden(false)}
-            >
-              Change
-            </button>
-          </div>
+          )}
           {!isHidden && (
             <div className="fixed top-0 left-0 h-screen w-full">
               <div className="bg-gray-500 opacity-50 inset-0 fixed z-10"></div>
@@ -153,7 +165,7 @@ const Pay = () => {
                               name="address"
                               className="inline-block w-4 h-4"
                               value={item._id}
-                              checked={item._id === choosenAddressTemp._id}
+                              checked={item._id === choosenAddressTemp?._id}
                               onChange={() => setchoosenAddressTemp(item)}
                             />
                             <div>

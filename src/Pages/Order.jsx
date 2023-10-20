@@ -28,6 +28,13 @@ const Order = () => {
 
   return (
     <div className="w-full h-full">
+      {orders.length === 0 && (
+        <div className="flex justify-center items-center h-[350px]">
+          <span className="text-2xl font-semibold">
+            You dont have any orders
+          </span>
+        </div>
+      )}
       {orders.map((item, index) => (
         <OrderItem item={item} key={index} />
       ))}
