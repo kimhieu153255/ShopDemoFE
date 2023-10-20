@@ -8,7 +8,8 @@ const Home = () => {
   const [popularProduct, setPopularProduct] = useState([]);
   const [newProduct, setNewProduct] = useState([]);
   const LoadPopularProduct = async () => {
-    const url = "http://localhost:20474/product/api/getPopularProducts";
+    const url =
+      "https://shop-demo1.onrender.com/product/api/getPopularProducts";
     try {
       const res = await axios.get(url, {
         params: { limit: 10 },
@@ -22,7 +23,7 @@ const Home = () => {
   };
 
   const LoadNewProduct = async () => {
-    const url = "http://localhost:20474/product/api/getNewProducts";
+    const url = "https://shop-demo1.onrender.com/product/api/getNewProducts";
     try {
       const res = await axios.get(url, {
         params: { limit: 10 },

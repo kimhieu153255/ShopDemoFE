@@ -35,7 +35,7 @@ const InforCard = () => {
   const getColorBySize = async (size) => {
     try {
       const res = await axios.get(
-        `http://localhost:20474/product/api/getColorBySize?id=${proId}&size=${size}`
+        `https://shop-demo1.onrender.com/product/api/getColorBySize?id=${proId}&size=${size}`
       );
       if (res.data) {
         console.log(res.data.data);
@@ -49,7 +49,7 @@ const InforCard = () => {
   const getSizeByColor = async (color) => {
     try {
       const res = await axios.get(
-        `http://localhost:20474/product/api/getSizeByColor?id=${proId}&color=${color}`
+        `https://shop-demo1.onrender.com/product/api/getSizeByColor?id=${proId}&color=${color}`
       );
       if (res.data) {
         console.log(res.data.data);
@@ -69,7 +69,7 @@ const InforCard = () => {
     }
   };
 
-  const url = `http://localhost:20474/cart/api/get`;
+  const url = `https://shop-demo1.onrender.com/cart/api/get`;
   const loadData = async (user, token) => {
     if (!user || !token) return;
     const res = await axios.get(url, {
@@ -84,7 +84,7 @@ const InforCard = () => {
   const addProductToCart = async (name) => {
     try {
       const res = await axios.post(
-        `http://localhost:20474/cart/api/addDetail`,
+        `https://shop-demo1.onrender.com/cart/api/addDetail`,
         {
           userId: JSON.parse(Cookies.get("user")?.toString() || null)._id,
           productId: proId,
@@ -115,7 +115,7 @@ const InforCard = () => {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:20474/product/api/getProductById?productId=${proId}`
+          `https://shop-demo1.onrender.com/product/api/getProductById?productId=${proId}`
         );
         if (res.data) {
           console.log(res.data.data);

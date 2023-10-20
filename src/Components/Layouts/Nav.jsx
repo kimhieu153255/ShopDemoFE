@@ -82,7 +82,7 @@ const Nav = () => {
     }
   };
 
-  const url = `http://localhost:20474/cart/api/get`;
+  const url = `https://shop-demo1.onrender.com/cart/api/get`;
   const loadData = async (user, token) => {
     if (!user || !token) {
       dispatch(setCartItems([]));

@@ -26,7 +26,7 @@ const LoginUser = () => {
     try {
       console.log(data);
       const res = await axios.post(
-        "http://localhost:20474/user/api/login",
+        "https://shop-demo1.onrender.com/user/api/login",
         data
       );
       console.log(res.data);

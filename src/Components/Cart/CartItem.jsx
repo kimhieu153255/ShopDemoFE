@@ -49,7 +49,7 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
   const GetNumberProductBySizeColor = async (id, color, size) => {
     try {
       const res = await axios.get(
-        "http://localhost:20474/product/api/getNumberProductBySizeColor",
+        "https://shop-demo1.onrender.com/product/api/getNumberProductBySizeColor",
         {
           params: {
             color,
@@ -72,7 +72,7 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
   const GetSizeByColor = async (id, color) => {
     try {
       const res = await axios.get(
-        "http://localhost:20474/product/api/getSizeByColor",
+        "https://shop-demo1.onrender.com/product/api/getSizeByColor",
         {
           params: {
             color,
@@ -92,7 +92,7 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
   const GetColorBySize = async (id, size) => {
     try {
       const res = await axios.get(
-        "http://localhost:20474/product/api/getColorBySize",
+        "https://shop-demo1.onrender.com/product/api/getColorBySize",
         {
           params: {
             size,
@@ -112,7 +112,7 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
   const GetAllColorAndSize = async (id) => {
     try {
       const res = await axios.get(
-        "http://localhost:20474/product/api/getAllSizeAndColor",
+        "https://shop-demo1.onrender.com/product/api/getAllSizeAndColor",
         {
           params: {
             id,
@@ -129,13 +129,16 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
 
   const updateCart = async (id, color, size, quantity) => {
     try {
-      const res = await axios.put("http://localhost:20474/cart/api/update", {
-        productId: id,
-        color,
-        size,
-        quantity,
-        userId: JSON.parse(Cookies.get("user") || null)._id,
-      });
+      const res = await axios.put(
+        "https://shop-demo1.onrender.com/cart/api/update",
+        {
+          productId: id,
+          color,
+          size,
+          quantity,
+          userId: JSON.parse(Cookies.get("user") || null)._id,
+        }
+      );
       if (res.data) {
         console.log(res.data);
       }
@@ -146,14 +149,17 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
 
   const deleteCart = async (id, color, size) => {
     try {
-      const res = await axios.delete("http://localhost:20474/cart/api/delete", {
-        data: {
-          productId: id,
-          color: color ? color : null,
-          size: size ? size : null,
-          userId: JSON.parse(Cookies.get("user") || null)._id,
-        },
-      });
+      const res = await axios.delete(
+        "https://shop-demo1.onrender.com/cart/api/delete",
+        {
+          data: {
+            productId: id,
+            color: color ? color : null,
+            size: size ? size : null,
+            userId: JSON.parse(Cookies.get("user") || null)._id,
+          },
+        }
+      );
       if (res.data) {
         console.log(res.data);
       }
@@ -359,6 +365,11 @@ const CartItem = ({ img, price, name, check, id, color, size, num }) => {
                 setCount((count) => count + 1);
                 dispatch(encreaseQuantity({ id, isEncrease: true }));
                 updateCart(id, colorChosen, sizeChosen, 1);
+              } else {
+                dispatch(addMessage(`Out of stock`));
+                setTimeout(() => {
+                  dispatch(removeMessage());
+                }, 1000);
               }
             }}
           >
