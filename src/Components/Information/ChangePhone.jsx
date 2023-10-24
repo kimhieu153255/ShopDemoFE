@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { validatePhone } from "../../helpers/helper";
-import axios from "axios";
 import Cookies from "js-cookie";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const ChangePhone = () => {
   const [newPhone, setNewPhone] = useState("");
@@ -11,13 +11,10 @@ const ChangePhone = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:20474/user/api/verify/phone",
-        {
-          newPhone,
-          userId: JSON.parse(Cookies.get("user")?.toString() || null)._id,
-        }
-      );
+      const res = await tokenAxiosInstance.post("/user/api/verify/phone", {
+        newPhone,
+        userId: JSON.parse(Cookies.get("user")?.toString() || null)._id,
+      });
       if (res.data) {
         console.log(res.data);
       }

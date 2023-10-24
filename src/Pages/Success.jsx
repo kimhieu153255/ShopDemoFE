@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useRef } from "react";
 import { FaCheck } from "react-icons/fa6";
+import tokenAxiosInstance from "../Axios/Token.a";
 
 const Success = () => {
   const SaveOrder = async () => {
@@ -11,10 +11,7 @@ const Success = () => {
     order = { ...order, sessionId: sessionId };
     if (!order) return;
     try {
-      const res = await axios.post(
-        "http://localhost:20474/api/order/save",
-        order
-      );
+      const res = await tokenAxiosInstance.post("/api/order/save", order);
       console.log(res.data);
       if (res.data.data) {
         localStorage.removeItem("BuyList");

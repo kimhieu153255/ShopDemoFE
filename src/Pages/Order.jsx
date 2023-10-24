@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import OrderItem from "../Components/Order/OrderItem";
-import axios from "axios";
 import Cookies from "js-cookie";
+import tokenAxiosInstance from "../Axios/Token.a";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -9,8 +9,8 @@ const Order = () => {
   const getOrders = async () => {
     try {
       const userId = JSON.parse(Cookies.get("user"))._id;
-      const res = await axios.get(
-        `http://localhost:20474/api/order/get?userId=${userId}`
+      const res = await tokenAxiosInstance.get(
+        `/api/order/get?userId=${userId}`
       );
       console.log(res.data);
       if (res.data.data) setOrders(res.data.data);

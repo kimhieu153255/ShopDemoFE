@@ -1,4 +1,3 @@
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { addMessage, removeMessage } from "../redux-toolkit/MessageSlice";
 import AddAddress from "../Components/Address/AddAddress";
 import disMessge from "../helpers/disMessage";
+import tokenAxiosInstance from "../Axios/Token.a";
 
 const Pay = () => {
   const tempBuyList = JSON.parse(localStorage.getItem("BuyList") || "[]");
@@ -29,8 +29,8 @@ const Pay = () => {
   }, 0);
 
   const funcGetAddresses = async () => {
-    const res = await axios.get(
-      `http://localhost:20474/address/api/get?userId=${user?._id}`
+    const res = await tokenAxiosInstance.get(
+      `/address/api/get?userId=${user?._id}`
     );
     if (res.data) {
       console.log(res.data);
@@ -73,17 +73,14 @@ const Pay = () => {
 
     try {
       if (method === "payment on delivery") {
-        const res = await axios.post(
-          "http://localhost:20474/api/order/add",
-          data
-        );
+        const res = await tokenAxiosInstance.post("/api/order/add", data);
         console.log(res.data);
         if (res.data) {
           window.location.href = "/order/success";
         }
       } else if (method === "payment by card") {
-        const res = await axios.post(
-          "http://localhost:20474/api/order/create-checkout-session",
+        const res = await tokenAxiosInstance.post(
+          "/api/order/create-checkout-session",
           data
         );
         console.log(res.data);
@@ -95,7 +92,7 @@ const Pay = () => {
       }
     } catch (err) {
       console.log(err);
-      // window.location.href = "/order/canceled";
+      window.location.href = "/order/canceled";
     }
   };
 

@@ -1,14 +1,15 @@
-import axios from "axios";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { CategoryArr } from "../helpers/data";
+import tokenAxiosInstance from "../Axios/Token.a";
+import imageAxiosInstance from "../Axios/Image.a";
 const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+
 const AddCard = () => {
   const [err, setErr] = useState();
   const user = JSON.parse(Cookies.get("user").toString() || null);
-  const token = Cookies.get("token");
   const [tempImage, setTempImage] = useState();
   const [product, setProduct] = useState({ size: "S", category: "Hat" });
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const AddCard = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     console.log(file);
+    //load image to public
     setTempImage(URL.createObjectURL(file));
     setProduct({ ...product, image: file });
   };
@@ -23,16 +25,13 @@ const AddCard = () => {
   const uploadImage = async () => {
     try {
       console.log("vào uploadImage");
-      const uploadRes = await axios.post(
-        "http://localhost:20474/product/api/uploadImg",
-        { image: product.image },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      console.log(product.image);
+      const uploadRes = await imageAxiosInstance.post(
+        "/product/api/uploadImg",
+        { image: product.image }
       );
+      console.log("uploadRes");
+      console.log(uploadRes);
       if (uploadRes.data) {
         console.log(uploadRes.data.data);
         return uploadRes.data.data;
@@ -52,18 +51,14 @@ const AddCard = () => {
         imgSrc = await uploadImage();
         console.log(imgSrc);
       }
+      if (!imgSrc) return;
       // add product to mongodb
       console.log({ ...product, userId: user._id, imgSrc });
-      const res = await axios.post(
-        "http://localhost:20474/product/api/addProduct",
-        { ...product, userId: user._id, imgSrc },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await tokenAxiosInstance.post("/product/api/addProduct", {
+        ...product,
+        userId: user._id,
+        imgSrc,
+      });
       if (res.data) {
         console.log(res.data);
         navigate("/shop");

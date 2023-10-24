@@ -1,4 +1,3 @@
-import axios from "axios";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import {
   validatePassword,
   validatePhone,
 } from "../helpers/helper.js";
+import nonTokenAxiosInstance from "../Axios/NonToken.a.jsx";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -51,10 +51,7 @@ const RegisterUser = () => {
       return;
     }
     try {
-      const res = await axios.post(
-        "http://localhost:20474/user/api/register",
-        data
-      );
+      const res = await nonTokenAxiosInstance.post("/user/api/register", data);
       if (res.data) {
         navigate("/user/login");
       }

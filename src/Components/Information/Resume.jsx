@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChangeGenderToNumber, changeDateToString } from "../../helpers/helper";
-import axios from "axios";
 const genderList = ["Other", "Male", "Female"];
 import { FaX } from "react-icons/fa6";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const Resume = () => {
   const overlayRef = useRef();
@@ -12,7 +12,6 @@ const Resume = () => {
   const [error, setError] = useState("");
   const user = JSON.parse(Cookies.get("user")?.toString() || null);
   const [tempImage, setTempImage] = useState(user?.avatar || "");
-  const token = Cookies.get("token");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,8 +26,9 @@ const Resume = () => {
           data.avatar = img;
         }
       }
-      const res = await axios.post(
-        `http://localhost:20474/user/api/update/${user._id}`,
+      console.log(data);
+      const res = await tokenAxiosInstance.post(
+        `/user/api/update/${user._id}`,
         data
       );
       if (res.data) {
@@ -51,12 +51,11 @@ const Resume = () => {
 
   const handleUploadImg = async () => {
     try {
-      const res = await axios.post(
-        `http://localhost:20474/user/api/uploadImg`,
+      const res = await tokenAxiosInstance.post(
+        `/user/api/uploadImg`,
         { image: data?.avatar },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

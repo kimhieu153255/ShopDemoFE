@@ -1,5 +1,3 @@
-import axios from "axios";
-import Cookies from "js-cookie";
 import propTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { addMessage, removeMessage } from "../../redux-toolkit/MessageSlice";
@@ -14,12 +12,10 @@ const AddressItem = ({
   isDefault,
 }) => {
   const dispatch = useDispatch();
-  const token = Cookies.get("token")?.toString() || null;
-
   const funcDeleteAddress = async () => {
     try {
-      const res = await axios.delete(
-        `http://localhost:20474/address/api/delete?addressId=${addressId}&token=${token}`
+      const res = await tokenAxiosInstance.delete(
+        `/address/api/delete?addressId=${addressId}`
       );
       if (res.data) {
         dispatch(addMessage(res.data.message));
@@ -39,9 +35,6 @@ const AddressItem = ({
 
   const funcSetDefaultAddress = async () => {
     try {
-      // const res = await axios.put(
-      //   `http://localhost:20474/address/api/set-default?addressId=${addressId}&token=${token}`
-      // );
       const res = await tokenAxiosInstance.put(
         `/address/api/set-default?addressId=${addressId}`
       );

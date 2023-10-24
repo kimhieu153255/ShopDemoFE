@@ -2,14 +2,12 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-// import { AuthContext } from "../Components/Contexts/AuthContext";
+import tokenAxiosInstance from "../Axios/Token.a";
 
 const RegisterStore = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const user = JSON.parse(Cookies.get("user")?.toString() || "{}");
-  // const { token, setUser } = useContext(AuthContext);
   const token = Cookies.get("token");
 
   useEffect(() => {
@@ -24,29 +22,8 @@ const RegisterStore = () => {
       userId: user?._id,
     };
     try {
-      const res = await axios.post(
-        "http://localhost:20474/store/api/register",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await tokenAxiosInstance.post("/store/api/register", data);
       if (res.data) {
-        // const response = await axios.get(
-        //   `http://localhost:20474/user/api/get/${userRef.current._id}`
-        // );
-        // if (response.data) {
-        //   Cookies.set("user", JSON.stringify(response.data), {
-        //     expires: 1 / 24,
-        //   });
-        //   Cookies.set("token", res.data.token, {
-        //     expires: 1 / 24,
-        //   });
-        // }
-        // setUser((prev) => ({ ...prev, role: 1 }));
         Cookies.set("user", JSON.stringify({ ...res.data, role: 1 }), {
           expires: 1 / 24,
         });

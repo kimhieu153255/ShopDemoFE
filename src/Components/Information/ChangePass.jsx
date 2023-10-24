@@ -1,4 +1,3 @@
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -6,6 +5,7 @@ import { addMessage, removeMessage } from "../../redux-toolkit/MessageSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const ChangePass = () => {
   const [pass, setPass] = useState("");
@@ -23,18 +23,13 @@ const ChangePass = () => {
     if (newPass !== reNewPass) setErrorNewPhone("New Password doesn't match");
     else setErrorNewPhone("");
     try {
-      const res = await axios.put(
-        `http://localhost:20474/user/api/change-password?userId=${
+      const res = await tokenAxiosInstance.put(
+        `/user/api/change-password?userId=${
           JSON.parse(Cookies.get("user"))._id
         }`,
         {
           newPassword: newPass ? CryptoJS.SHA256(newPass).toString() : null,
           oldPassword: pass ? CryptoJS.SHA256(pass).toString() : null,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
         }
       );
       console.log(res.data);

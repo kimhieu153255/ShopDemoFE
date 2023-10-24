@@ -1,11 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
-import CartListSmall from "../Cart/CartListSmall";
 import { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import CartListSmall from "../Cart/CartListSmall";
 import { setCartItems } from "../../redux-toolkit/CartSlice";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const NavList = [
   {
@@ -74,7 +74,7 @@ const Nav = () => {
 
   const handleLogout = async () => {
     if (token) {
-      await axios.get("http://localhost:20474/user/api/logout");
+      await tokenAxiosInstance.get("/user/api/logout");
       Cookies.remove("token");
       Cookies.remove("user");
       Cookies.remove("storeId");
@@ -82,18 +82,14 @@ const Nav = () => {
     }
   };
 
-  const url = `https://shop-demo1.onrender.com/cart/api/get`;
   const loadData = async (user, token) => {
     if (!user || !token) {
       dispatch(setCartItems([]));
       return;
     }
-    const res = await axios.get(url, {
-      params: { userId: user._id },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await tokenAxiosInstance.get(
+      `/cart/api/get?userId=${user._id}`
+    );
     dispatch(setCartItems(res.data?.ListCart || []));
   };
 

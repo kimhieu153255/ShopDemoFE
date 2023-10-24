@@ -23,6 +23,9 @@ const AddAddress = ({ isHidden, setIsHidden }) => {
     setSpecificAddress("");
     setName("");
     setPhone("");
+    nameRef.current.value = "";
+    phoneRef.current.value = "";
+    specificRef.current.value = "";
   };
 
   const handleSubmit = async (e) => {
@@ -38,13 +41,7 @@ const AddAddress = ({ isHidden, setIsHidden }) => {
     };
 
     const user = JSON.parse(Cookies.get("user")?.toString() || null);
-    // const token = Cookies.get("token")?.toString() || null;
-
     try {
-      // const res = await axios.post(
-      //   `http://localhost:20474/address/api/add?userId=${user._id}&token=${token}`,
-      //   data
-      // );
       const res = await tokenAxiosInstance.post(
         `/address/api/add?userId=${user._id}`,
         data
@@ -53,12 +50,7 @@ const AddAddress = ({ isHidden, setIsHidden }) => {
         console.log(res.data);
         setIsHidden(true);
         clear();
-        nameRef.current.value = "";
-        phoneRef.current.value = "";
-        specificRef.current.value = "";
-      } else {
-        console.log(res.data);
-      }
+      } else console.log(res.data);
     } catch (err) {
       console.log(err);
     }

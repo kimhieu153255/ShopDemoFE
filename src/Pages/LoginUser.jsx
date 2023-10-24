@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import cryptojs from "crypto-js";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../redux-toolkit/AuthSlice";
 import Cookies from "js-cookie";
+import nonTokenAxiosInstance from "../Axios/NonToken.a";
 
 const LoginUser = () => {
   const navigate = useNavigate();
@@ -25,10 +25,7 @@ const LoginUser = () => {
       : null;
     try {
       console.log(data);
-      const res = await axios.post(
-        "https://shop-demo1.onrender.com/user/api/login",
-        data
-      );
+      const res = await nonTokenAxiosInstance.post("/user/api/login", data);
       console.log(res.data);
       if (res.data) {
         Cookies.set("token", res.data.token, {

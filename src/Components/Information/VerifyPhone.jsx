@@ -1,9 +1,9 @@
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addMessage, removeMessage } from "../../redux-toolkit/MessageSlice";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const VerifyPhone = () => {
   const [err, setErr] = useState("");
@@ -15,8 +15,8 @@ const VerifyPhone = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `http://localhost:20474/user/api/verify/phone/confirm?userId=${user._id}`,
+      const res = await tokenAxiosInstance.post(
+        `/user/api/verify/phone/confirm?userId=${user._id}`,
         { numberCode: code }
       );
       if (res.data) {

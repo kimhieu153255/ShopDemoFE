@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const VerifyEmail = () => {
   const { newEmail } = useParams();
@@ -14,11 +14,10 @@ const VerifyEmail = () => {
     e.preventDefault();
     console.log("data: ", data);
     try {
-      const res = await axios.post(
-        "http://localhost:20474/user/api/verify/email/confirm",
+      const res = await tokenAxiosInstance.post(
+        "/user/api/verify/email/confirm",
         data
       );
-      //lỗi
       console.log(res.data);
       if (res.data.err) {
         setErr(res.data.err);

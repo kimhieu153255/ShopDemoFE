@@ -1,8 +1,8 @@
 import { FaAngleDown, FaAngleUp, FaCaretRight, FaListUl } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const Catalog = ({ setUrl, url }) => {
   const storeId = Cookies.get("storeId");
@@ -12,17 +12,11 @@ const Catalog = ({ setUrl, url }) => {
   const [total, setTotal] = useState(0);
   const [state, setState] = useState("");
 
-  const urlCategory = `http://localhost:20474/store/api/getAllCategories`;
   const getAllCategories = async (token, storeId) => {
     try {
-      const response = await axios.get(urlCategory, {
-        params: {
-          storeId: storeId,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await tokenAxiosInstance.get(
+        `/store/api/getAllCategories?storeId=${storeId}`
+      );
       console.log("response", response.data);
       if (response.data) {
         setData(response.data?.data?.categories || []);

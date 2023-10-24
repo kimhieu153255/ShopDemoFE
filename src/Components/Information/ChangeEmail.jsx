@@ -1,14 +1,12 @@
-import axios from "axios";
 import { useState } from "react";
 import { validateEmail } from "../../helpers/helper";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-// import { AuthContext } from "../Contexts/AuthContext";
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const ChangeEmail = () => {
   const navigate = useNavigate();
   const [err, setErr] = useState();
-  // const { user } = useContext(AuthContext);
   const user = JSON.parse(Cookies.get("user")?.toString() || null);
   const [data, setData] = useState({
     id: user._id,
@@ -31,10 +29,7 @@ const ChangeEmail = () => {
     }
     console.log(data);
     try {
-      const res = await axios.post(
-        "http://localhost:20474/user/api/verify/email",
-        data
-      );
+      const res = await tokenAxiosInstance.post("/user/api/verify/email", data);
       if (res.data) {
         console.log(res.data);
         navigate(`/user/information/verify-email/${data?.newEmail}`);

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import AddressItem from "./AddressItem";
-// import axios from "axios";
 import Cookies from "js-cookie";
 import propTypes from "prop-types";
 import tokenAxiosInstance from "../../Axios/Token.a";
@@ -8,14 +7,10 @@ import tokenAxiosInstance from "../../Axios/Token.a";
 const AddressList = ({ isHidden }) => {
   const [data, setData] = useState([]);
   const user = JSON.parse(Cookies.get("user")?.toString() || null);
-  // const token = Cookies.get("token")?.toString() || null;
   const [isChange, setIsChange] = useState(false);
 
   const funcGetAddressList = async () => {
     try {
-      // const res = await axios.get(
-      //   `http://localhost:20474/address/api/get?userId=${user._id}&token=${token}`
-      // );
       const res = await tokenAxiosInstance.get(
         `/address/api/get?userId=${user._id}`
       );

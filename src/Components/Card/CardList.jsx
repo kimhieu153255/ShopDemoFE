@@ -1,10 +1,8 @@
 import Cookies from "js-cookie";
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import List from "./List";
-
-const urlGetAllProByStoreId = `http://localhost:20474/product/api/getAllProductsByStoreId`;
+import tokenAxiosInstance from "../../Axios/Token.a";
 
 const CardList = ({ storeId, url, page, setTotalPage }) => {
   console.log("vào CardList");
@@ -13,12 +11,12 @@ const CardList = ({ storeId, url, page, setTotalPage }) => {
 
   const getAllProducts = async (token, page) => {
     try {
-      const response = await axios.get(urlGetAllProByStoreId + url, {
-        params: { storeId, page },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await tokenAxiosInstance.get(
+        `/product/api/getAllProductsByStoreId${url}`,
+        {
+          params: { storeId, page },
+        }
+      );
       if (response.data) {
         console.log("response", response.data);
         setTotalPage(response.data?.totalPage);
